@@ -14,7 +14,7 @@ export default function Navbar() {
   const location = useLocation()
 
   return (
-    <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
+    <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto bg-white border-b border-zinc-200 shadow-sm">
       <div className="flex items-center gap-8">
         <Link
           className="flex items-center gap-2 text-2xl font-black italic text-[#E7308C] dark:text-[#E7308C]"
