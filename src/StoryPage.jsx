@@ -83,7 +83,7 @@ const StoryPage = () => {
       <nav className="story-nav">
         <div className="nav-logo">
           SCI CHULA
-          <span>OPEN HOUSE</span>
+          <span>กีฬาสานสัมพันธ์</span>
         </div>
         <button className="nav-menu-btn">
           <span></span>
@@ -96,7 +96,8 @@ const StoryPage = () => {
       <header className="hero-section">
         <div className="hero-title">
           <span className="subtitle">SINCE 1916</span>
-          <h1>SCIENCE 2026<br />CHULA OPEN HOUSE</h1>
+          <h1>กีฬาสานสัมพันธ์<br />SCIENCE 2026</h1>
+          <div className="vs-badge">ComSci & Math</div>
           <span className="subtitle">THE GRAND SCCU</span>
         </div>
 
@@ -160,7 +161,7 @@ const StoryPage = () => {
           <a href="#" className="social-icon">👤</a>
         </div>
         <div className="footer-text">
-          Science Chula Open House 2026
+          กีฬาสานสัมพันธ์ Science Chula 2026
         </div>
       </footer>
     </div>
