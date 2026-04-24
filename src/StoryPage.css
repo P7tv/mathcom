@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --primary-dark: #0a192f;
+  --primary-navy: #112240;
+  --accent-gold: #d4af37;
+  --accent-beige: #f5e6ca;
+  --text-white: #e6f1ff;
+  --text-gray: #8892b0;
+  
+  --stamp-teal: #26a69a;
+  --stamp-green: #2e7d32;
+  --stamp-pink: #ec407a;
+  --stamp-cyan: #00acc1;
+  --stamp-orange: #fb8c00;
+}
+
+.story-container {
+  min-height: 100vh;
+  background-color: var(--primary-dark);
+  color: var(--text-white);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.story-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: rgba(10, 25, 47, 0.95);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.nav-logo span {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--text-white);
+}
+
+.nav-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.nav-menu-btn span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: var(--text-white);
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  max-width: 800px;
+}
+
+.hero-title h1 {
+  font-size: 3.5rem;
+  margin: 0;
+  color: var(--text-white);
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.hero-title .subtitle {
+  font-size: 1.2rem;
+  color: var(--accent-gold);
+  letter-spacing: 4px;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.date-badge {
+  background-color: var(--accent-beige);
+  color: var(--primary-dark);
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  border: 3px solid var(--accent-gold);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transform: translateY(0);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.date-badge:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+/* Building Silhouette */
+.building-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: linear-gradient(to top, rgba(17, 34, 64, 0.8), transparent);
+  z-index: -1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Stamp Grid */
+.stamps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Stamp Component */
+.stamp {
+  position: relative;
+  width: 180px;
+  height: 220px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  
+  /* Perforated edge effect using radial gradients */
+  background-image: 
+    radial-gradient(circle at 0 0, transparent 8px, white 8px),
+    radial-gradient(circle at 100% 0, transparent 8px, white 8px),
+    radial-gradient(circle at 0 100%, transparent 8px, white 8px),
+    radial-gradient(circle at 100% 100%, transparent 8px, white 8px);
+  background-position: top left, top right, bottom left, bottom right;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+/* The actual perforated border using mask */
+.stamp-inner {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.stamp::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: -8px; right: -8px; bottom: -8px;
+  z-index: -1;
+  background: radial-gradient(circle, transparent 4px, #f0f0f0 4px);
+  background-size: 16px 16px;
+  background-position: -8px -8px;
+}
+
+.stamp:hover {
+  transform: translateY(-15px) rotate(3deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.stamp-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+.stamp-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stamp.teal .stamp-content { background-color: var(--stamp-teal); }
+.stamp.green .stamp-content { background-color: var(--stamp-green); }
+.stamp.pink .stamp-content { background-color: var(--stamp-pink); }
+.stamp.cyan .stamp-content { background-color: var(--stamp-cyan); }
+.stamp.orange .stamp-content { background-color: var(--stamp-orange); }
+
+/* Info Section */
+.info-section {
+  background-color: #fce7f3; /* Pink background from image */
+  color: var(--primary-dark);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.info-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.map-container {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 400px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  color: #666;
+}
+
+.address-text {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+.story-footer {
+  background-color: #050a16;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  color: var(--text-white);
+  transition: 0.3s;
+}
+
+.social-icon:hover {
+  color: var(--accent-gold);
+  transform: scale(1.2);
+}
+
+.footer-text {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .hero-title h1 {
+    font-size: 2.2rem;
+  }
+  .stamps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stamp {
+    width: 150px;
+    height: 190px;
+  }
+}
