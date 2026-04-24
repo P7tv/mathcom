@@ -56,11 +56,11 @@ const StarCanvas = () => {
 };
 
 const STAMPS = [
-  { id: 1, label: 'DEPARTMENT WEBSITES', icon: '🌐', color: 'teal' },
-  { id: 2, label: 'WORKSHOPS', icon: '🌲', color: 'green' },
-  { id: 3, label: 'RECHECK', icon: '🏔️', color: 'pink' },
-  { id: 4, label: 'REDEEM', icon: '🏛️', color: 'cyan' },
-  { id: 5, label: 'MERCH', icon: '🌵', color: 'orange' },
+  { id: 1, label: 'MATCH SCHEDULE', icon: '⚡', color: 'teal' },
+  { id: 2, label: 'ATHLETE ROSTER', icon: '🛡️', color: 'green' },
+  { id: 3, label: 'CHEER & SPIRIT', icon: '🔥', color: 'pink' },
+  { id: 4, label: 'MOMENT GALLERY', icon: '✨', color: 'cyan' },
+  { id: 5, label: 'LIVE SCOREBOARD', icon: '💎', color: 'orange' },
 ];
 
 const Stamp = ({ label, icon, color, delay }) => (
@@ -97,9 +97,15 @@ const StoryPage = () => {
         <div className="hero-title">
           <span className="subtitle">SINCE 1916</span>
           <h1>กีฬาสานสัมพันธ์<br />SCIENCE 2026</h1>
-          <div className="vs-badge">ComSci & Math</div>
           <span className="subtitle">THE GRAND SCCU</span>
         </div>
+
+        <div className="vs-badge">COMSCI & MATH</div>
+        
+        <p className="hero-description">
+          ร่วมเป็นส่วนหนึ่งของการประชันฝีเท้าและสปิริตในกิจกรรมกีฬาสานสัมพันธ์ 
+          ที่รวบรวมชาวคณิตศาสตร์และวิทยาการคอมพิวเตอร์เข้าด้วยกันเป็นหนึ่งเดียว
+        </p>
 
         <div className="date-badge">
           28 - 29 March 2026 | 8.00 - 17.00
@@ -107,12 +113,27 @@ const StoryPage = () => {
 
         <div className="building-silhouette">
           {/* We'll use a CSS-based building silhouette here or a simple SVG path */}
-          <svg viewBox="0 0 1000 400" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
-            <path 
-              d="M0,400 L0,300 L50,300 L50,280 L100,280 L100,250 L150,250 L150,200 L200,200 L200,100 L250,100 L250,50 L300,50 L300,100 L350,100 L350,200 L400,200 L400,250 L450,250 L450,280 L500,280 L500,300 L1000,300 L1000,400 Z" 
-              fill="currentColor" 
-            />
+          <svg viewBox="0 0 1000 400" preserveAspectRatio="none">
+            {/* Wireframe Building Silhouette */}
+            <path d="M0,350 L1000,350" />
+            <path d="M200,350 L200,300 L300,300 L300,350" />
+            <path d="M300,350 L300,250 L450,250 L450,350" />
+            <path d="M450,350 L450,150 L550,150 L550,350" />
+            <path d="M550,350 L550,250 L700,250 L700,350" />
+            <path d="M700,350 L700,300 L800,300 L800,350" />
+            {/* Detailed lines */}
+            <path d="M450,180 L550,180" strokeOpacity="0.5" />
+            <path d="M450,210 L550,210" strokeOpacity="0.5" />
+            <path d="M300,280 L450,280" strokeOpacity="0.5" />
+            <path d="M550,280 L700,280" strokeOpacity="0.5" />
           </svg>
+        </div>
+
+        <div className="scroll-indicator">
+          <span>EXPLORE</span>
+          <div className="mouse">
+            <div className="wheel"></div>
+          </div>
         </div>
       </header>
 
