@@ -1,17 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 
 export default function HomePage() {
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-
-      <main className="max-w-[1280px] mx-auto px-margin w-full flex-grow">
-        {/* Hero Section */}
-        <section className="mt-stack-lg mb-stack-lg relative rounded-xl overflow-hidden shadow-lg border border-outline-variant h-[600px] flex items-center justify-center">
+    <main className="max-w-[1280px] mx-auto px-margin w-full flex-grow">
+      {/* Hero Section */}
+      <section className="mt-stack-lg mb-stack-lg relative rounded-xl overflow-hidden shadow-lg border border-outline-variant h-[600px] flex items-center justify-center">
           <div className="absolute inset-0 z-0 bg-inverse-surface/80">
             <img
               alt="stadium"
@@ -135,10 +130,10 @@ export default function HomePage() {
                     </div>
                     <div className="text-center flex-1">
                       <div className="w-12 h-12 mx-auto bg-surface-container-high rounded-full flex items-center justify-center mb-1 text-lg font-bold text-on-surface">
-                        NaN
+                        TIT
                       </div>
                       <span className="font-body-md text-sm text-on-surface-variant">
-                        NaN no Number
+                        Titan Guardians
                       </span>
                     </div>
                   </div>
@@ -147,9 +142,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-      </main>
-
-      <Footer />
-    </div>
+    </main>
   )
 }

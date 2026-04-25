@@ -1,12 +1,8 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+
 
 export default function TeamsPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-
-      <main className="flex-grow flex flex-col w-full max-w-[1280px] mx-auto px-margin pt-stack-lg pb-stack-lg gap-stack-lg">
+    <main className="flex-grow flex flex-col w-full max-w-[1280px] mx-auto px-margin pt-stack-lg pb-stack-lg gap-stack-lg">
         {/* Header */}
         <section className="flex flex-col gap-stack-md">
           <div>
@@ -42,9 +38,6 @@ export default function TeamsPage() {
             </div>
           </article>
         </section>
-      </main>
-
-      <Footer />
-    </div>
+    </main>
   )
 }

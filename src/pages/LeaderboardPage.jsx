@@ -1,11 +1,8 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+
 
 export default function LeaderboardPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-margin py-stack-lg flex flex-col gap-stack-lg">
+    <main className="flex-grow w-full max-w-[1280px] mx-auto px-margin py-stack-lg flex flex-col gap-stack-lg">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-stack-md border-b border-surface-variant pb-stack-md">
           <div>
             <h1 className="font-h1 text-h1 text-on-surface mb-stack-xs">Championship Leaderboard</h1>
@@ -19,8 +16,6 @@ export default function LeaderboardPage() {
             <div className="font-stat-value text-stat-value text-primary mb-stack-md text-4xl">67 pts</div>
           </div>
         </section>
-      </main>
-      <Footer />
-    </div>
+    </main>
   )
 }

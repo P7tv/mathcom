@@ -1,11 +1,8 @@
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+
 
 export default function GamesPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow w-full max-w-[1280px] mx-auto px-margin py-margin">
+    <main className="flex-grow w-full max-w-[1280px] mx-auto px-margin py-margin">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-end mb-stack-lg gap-stack-md border-b border-outline-variant pb-stack-sm">
           <div>
             <h1 className="font-h1 text-h1 text-on-surface mb-stack-xs">Match Center</h1>
@@ -36,8 +33,6 @@ export default function GamesPage() {
             </div>
           </section>
         </div>
-      </main>
-      <Footer />
-    </div>
+    </main>
   )
 }
