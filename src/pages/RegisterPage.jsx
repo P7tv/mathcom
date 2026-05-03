@@ -1,8 +1,50 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import logo from '../assets/mathcom_logo.png'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
+  const { register } = useAuth()
+
+  const [formData, setFormData] = useState({
+    studentId: '',
+    firstName: '',
+    lastName: '',
+    major: '',
+    foodAllergies: '',
+    medicalInfo: '',
+  })
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setIsLoading(true)
+
+    try {
+      const result = await register(formData)
+
+      if (result.success) {
+        navigate('/teams')
+      } else {
+        setError(result.error || 'เกิดข้อผิดพลาดในการลงทะเบียน กรุณาลองใหม่')
+      }
+    } catch (err) {
+      setError('ไม่สามารถเชื่อมต่อ server ได้ กรุณาลองใหม่อีกครั้ง')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const inputClass =
+    'block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none'
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -42,22 +84,27 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            <form
-              className="space-y-6"
-              onSubmit={(e) => {
-                e.preventDefault()
-                navigate('/teams')
-              }}
-            >
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 font-body-md text-sm flex items-center gap-3">
+                <span className="material-symbols-outlined text-red-400">error</span>
+                {error}
+              </div>
+            )}
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="block font-mono text-sm text-secondary uppercase mb-2 tracking-wider">
                   Student ID
                 </label>
                 <div className="relative">
                   <input
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none"
+                    className={inputClass}
                     placeholder="e.g. 643XXXXX21"
                     type="text"
+                    name="studentId"
+                    value={formData.studentId}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -69,8 +116,11 @@ export default function RegisterPage() {
                     First Name
                   </label>
                   <input
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none"
+                    className={inputClass}
                     type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -79,8 +129,11 @@ export default function RegisterPage() {
                     Last Name
                   </label>
                   <input
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none"
+                    className={inputClass}
                     type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -92,9 +145,11 @@ export default function RegisterPage() {
                 </label>
                 <div className="relative">
                   <select
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none appearance-none"
+                    className={`${inputClass} appearance-none`}
+                    name="major"
+                    value={formData.major}
+                    onChange={handleChange}
                     required
-                    defaultValue=""
                   >
                     <option value="" disabled>Select your major...</option>
                     <option value="Computer Science">Computer Science</option>
@@ -112,8 +167,11 @@ export default function RegisterPage() {
                     Food Allergies / แพ้อาหาร
                   </label>
                   <textarea
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none outline-none"
+                    className={`${inputClass} resize-none`}
                     rows={2}
+                    name="foodAllergies"
+                    value={formData.foodAllergies}
+                    onChange={handleChange}
                     placeholder="e.g. ถั่ว, อาหารทะเล, นม (ถ้าไม่มีให้เว้นว่าง)"
                   />
                 </div>
@@ -122,8 +180,11 @@ export default function RegisterPage() {
                     Medical Info / โรคประจำตัว
                   </label>
                   <textarea
-                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none outline-none"
+                    className={`${inputClass} resize-none`}
                     rows={2}
+                    name="medicalInfo"
+                    value={formData.medicalInfo}
+                    onChange={handleChange}
                     placeholder="e.g. หอบหืด, ภูมิแพ้, โรคหัวใจ (ถ้าไม่มีให้เว้นว่าง)"
                   />
                 </div>
@@ -137,10 +198,21 @@ export default function RegisterPage() {
                   Cancel
                 </Link>
                 <button
-                  className="bg-primary text-white font-h3 text-lg px-8 py-3 rounded-lg hover:bg-opacity-80 transition-all shadow-glow-pink flex items-center gap-2"
+                  className="bg-primary text-white font-h3 text-lg px-8 py-3 rounded-lg hover:bg-opacity-80 transition-all shadow-glow-pink flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   type="submit"
+                  disabled={isLoading}
                 >
-                  Continue
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      กำลังลงทะเบียน...
+                    </>
+                  ) : (
+                    'Continue'
+                  )}
                 </button>
               </div>
             </form>

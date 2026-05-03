@@ -9,20 +9,16 @@ const navLinks = [
   { path: '/leaderboard', label: 'Leaderboard' },
 ]
 
-const TEAMS = {
-  1: { name: 'Thunder Dragons', icon: '⚡', color: '#FF6B9D' },
-  2: { name: 'Phoenix Strikers', icon: '🔥', color: '#FF9F43' },
-  3: { name: 'Titan Guardians', icon: '💪', color: '#A29BFE' },
-  4: { name: 'Shadow Wolves', icon: '🌙', color: '#2C3E50' },
-}
-
 export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
-  const teamId = user?.teamId || 1
-  const team = TEAMS[teamId]
+  const team = user?.team ? {
+    name: user.team,
+    icon: user.teamIcon || '🏅',
+    color: user.teamColor || '#FF6B9D',
+  } : null
 
   return (
     <nav

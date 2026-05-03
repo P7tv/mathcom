@@ -19,8 +19,8 @@ function AppRoutes() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LoginPage />} />
-      <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage />} />
+      <Route path="/login" element={user ? <Navigate to={user.teamId ? '/dashboard' : '/teams'} /> : <LoginPage />} />
+      <Route path="/register" element={user ? <Navigate to={user.teamId ? '/dashboard' : '/teams'} /> : <RegisterPage />} />
 
       {/* Protected Routes - Dashboard & Competition */}
       <Route
@@ -37,9 +37,13 @@ function AppRoutes() {
         path="/teams"
         element={
           <ProtectedRoute>
-            <Layout>
+            {user?.teamId ? (
+              <Layout>
+                <TeamsPage />
+              </Layout>
+            ) : (
               <TeamsPage />
-            </Layout>
+            )}
           </ProtectedRoute>
         }
       />
