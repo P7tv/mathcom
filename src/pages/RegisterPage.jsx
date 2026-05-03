@@ -88,13 +88,45 @@ export default function RegisterPage() {
 
               <div>
                 <label className="block font-mono text-sm text-secondary uppercase mb-2 tracking-wider">
-                  Food Allergies
+                  Major / ชื่อสาขา
                 </label>
-                <textarea
-                  className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none outline-none"
-                  rows={3}
-                  placeholder="e.g. ถั่ว, อาหารทะเล, นม (ถ้าไม่มีให้เว้นว่าง)"
-                />
+                <div className="relative">
+                  <select
+                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none appearance-none"
+                    required
+                    defaultValue=""
+                  >
+                    <option value="" disabled>Select your major...</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Mathematics">Mathematics</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    <span className="material-symbols-outlined text-on-surface-variant">expand_more</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-mono text-sm text-secondary uppercase mb-2 tracking-wider">
+                    Food Allergies / แพ้อาหาร
+                  </label>
+                  <textarea
+                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none outline-none"
+                    rows={2}
+                    placeholder="e.g. ถั่ว, อาหารทะเล, นม (ถ้าไม่มีให้เว้นว่าง)"
+                  />
+                </div>
+                <div>
+                  <label className="block font-mono text-sm text-secondary uppercase mb-2 tracking-wider">
+                    Medical Info / โรคประจำตัว
+                  </label>
+                  <textarea
+                    className="block w-full px-4 py-3 border border-outline border-opacity-30 rounded-lg bg-background text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none outline-none"
+                    rows={2}
+                    placeholder="e.g. หอบหืด, ภูมิแพ้, โรคหัวใจ (ถ้าไม่มีให้เว้นว่าง)"
+                  />
+                </div>
               </div>
 
               <div className="pt-6 mt-6 border-t border-outline border-opacity-30 flex items-center justify-between">
