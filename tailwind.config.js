@@ -34,11 +34,11 @@ export default {
         'team-green': '#4ADE80',
       },
       fontFamily: {
-        h1: ["Outfit", "Space Grotesk", "sans-serif"],
-        h2: ["Outfit", "Space Grotesk", "sans-serif"],
-        h3: ["Space Grotesk", "sans-serif"],
-        'body-md': ["Inter", "sans-serif"],
-        'body-lg': ["Inter", "sans-serif"],
+        h1: ["Outfit", "Anuphan", "sans-serif"],
+        h2: ["Outfit", "Anuphan", "sans-serif"],
+        h3: ["Anuphan", "sans-serif"],
+        'body-md': ["Anuphan", "sans-serif"],
+        'body-lg': ["Anuphan", "sans-serif"],
         'mono': ["JetBrains Mono", "monospace"],
       },
       backdropBlur: {
