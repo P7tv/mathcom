@@ -138,7 +138,8 @@ export default function LeaderboardPage() {
               </div>
             ))}
           </div>
-        )}
+        </div>
+      )}
 
         {/* Decorative Elements */}
         <img src="/assets/star-8pt.png" alt="" className="absolute -left-20 top-40 w-16 opacity-10 animate-twinkle" />

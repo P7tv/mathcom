@@ -150,6 +150,7 @@ export default function AdminPage() {
               <button onClick={handleRandomAssign} disabled={isRandomizing || unassignedCount === 0} className="w-full btn-primary py-3 text-sm disabled:opacity-30">
                 {isRandomizing ? '🎲 กำลังสุ่ม...' : `🎲 สุ่มจัดทีม (${unassignedCount} คน)`}
               </button>
+              <button onClick={() => navigate('/lucky-draw')} className="w-full btn-secondary py-3 text-sm">🎰 เปิดวงล้อสุ่มผู้โชคดี</button>
               <button onClick={handleExportCSV} className="w-full btn-secondary py-3 text-sm">📥 Export CSV รายชื่อ</button>
               <button onClick={fetchAllRegistrations} className="w-full btn-secondary py-3 text-sm">🔄 รีเฟรชข้อมูล</button>
             </div>

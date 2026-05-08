@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage'
 import HomePage from './pages/HomePage'
 import AdminPage from './pages/AdminPage'
 import LeaderboardPage from './pages/LeaderboardPage'
+import LuckyDrawPage from './pages/LuckyDrawPage'
 
 function ProtectedRoute({ children }) {
   const { user, isLoading } = useAuth()
@@ -29,6 +30,7 @@ function AppRoutes() {
       {/* Protected Dashboard */}
       <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
       <Route path="/leaderboard" element={<LeaderboardPage />} />
+      <Route path="/lucky-draw" element={<LuckyDrawPage />} />
       <Route path="/admin" element={<AdminPage />} />
 
       {/* Catch all */}

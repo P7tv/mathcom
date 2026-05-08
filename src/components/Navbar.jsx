@@ -29,6 +29,7 @@ export default function Navbar() {
           ) : (
             <div className="flex gap-3">
               <button onClick={() => navigate('/leaderboard')} className="text-on-surface/60 hover:text-primary text-sm">Leaderboard</button>
+              <button onClick={() => navigate('/lucky-draw')} className="text-on-surface/60 hover:text-primary text-sm">สุ่มผู้โชคดี</button>
               <button onClick={() => navigate('/check')} className="text-on-surface/60 hover:text-primary text-sm">เช็คสถานะ</button>
               <button onClick={() => navigate('/register')} className="btn-primary py-1.5 px-5 text-sm">ลงทะเบียน</button>
             </div>
