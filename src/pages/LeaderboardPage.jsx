@@ -96,9 +96,13 @@ export default function LeaderboardPage() {
                         </div>
                       </div>
                       
-                      {/* Team Icon & Name */}
+                      {/* Team Asset & Name */}
                       <div className="mt-6 text-center">
-                        <div className="text-3xl md:text-5xl mb-2">{item.teamInfo?.icon}</div>
+                        <img 
+                          src={item.teamInfo?.asset} 
+                          alt="" 
+                          className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-2 animate-float-slow drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" 
+                        />
                         <div className="text-[10px] md:text-xs font-bold uppercase tracking-tighter opacity-60" style={{ color: item.teamInfo?.color }}>
                           {item.teamInfo?.nameEn}
                         </div>

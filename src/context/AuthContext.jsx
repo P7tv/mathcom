@@ -5,10 +5,10 @@ const AuthContext = createContext()
 
 // Team definitions for Sports Day
 export const TEAMS = [
-  { id: 'red', name: 'ทีมแดง', nameEn: 'Red', color: '#E85D75', icon: '🔴', bgClass: 'bg-team-red', badgeClass: 'team-badge-red' },
-  { id: 'blue', name: 'ทีมน้ำเงิน', nameEn: 'Blue', color: '#4A90D9', icon: '🔵', bgClass: 'bg-team-blue', badgeClass: 'team-badge-blue' },
-  { id: 'yellow', name: 'ทีมเหลือง', nameEn: 'Yellow', color: '#E8C85A', icon: '🟡', bgClass: 'bg-team-yellow', badgeClass: 'team-badge-yellow' },
-  { id: 'green', name: 'ทีมเขียว', nameEn: 'Green', color: '#4ADE80', icon: '🟢', bgClass: 'bg-team-green', badgeClass: 'team-badge-green' },
+  { id: 'red', name: 'ทีมแดง', nameEn: 'Red', color: '#E85D75', icon: '🔴', bgClass: 'bg-team-red', badgeClass: 'team-badge-red', asset: '/assets/saturn.png' },
+  { id: 'blue', name: 'ทีมน้ำเงิน', nameEn: 'Blue', color: '#4A90D9', icon: '🔵', bgClass: 'bg-team-blue', badgeClass: 'team-badge-blue', asset: '/assets/jupiter.png' },
+  { id: 'yellow', name: 'ทีมเหลือง', nameEn: 'Yellow', color: '#E8C85A', icon: '🟡', bgClass: 'bg-team-yellow', badgeClass: 'team-badge-yellow', asset: '/assets/planet-venus.png' },
+  { id: 'green', name: 'ทีมเขียว', nameEn: 'Green', color: '#4ADE80', icon: '🟢', bgClass: 'bg-team-green', badgeClass: 'team-badge-green', asset: '/assets/moon-crater.png' },
 ]
 
 export function AuthProvider({ children }) {

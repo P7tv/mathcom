@@ -49,21 +49,37 @@ export default function HomePage() {
         </div>
 
         {/* Team Status */}
-        <div className="glass-panel p-8 rounded-3xl border-primary/10 text-center">
+        <div className="glass-panel p-10 md:p-16 rounded-[3rem] mb-12 text-center relative overflow-hidden group">
           {team ? (
             <>
-              <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center text-4xl mb-4 shadow-lg" style={{ backgroundColor: team.color + '30', border: `2px solid ${team.color}` }}>
-                {team.icon}
+              {/* Team Star Display */}
+              <div className="relative mb-8">
+                <div 
+                  className="absolute inset-0 blur-3xl opacity-20 rounded-full"
+                  style={{ backgroundColor: team.color }}
+                />
+                <img 
+                  src={team.asset} 
+                  alt={team.name} 
+                  className="w-48 h-48 md:w-64 md:h-64 mx-auto animate-float-slow drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]" 
+                />
               </div>
-              <h2 className="text-2xl font-bold mb-1" style={{ color: team.color }}>{team.name}</h2>
-              <p className="text-on-surface/50 text-sm mb-4">{team.nameEn} Team</p>
-              <div className={`inline-block team-badge ${team.badgeClass}`}>สมาชิก{team.name}</div>
+              
+              <h2 className="text-sm font-bold text-on-surface/40 uppercase tracking-widest mb-4">คุณอยู่ทีม</h2>
+              <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter" style={{ color: team.color }}>
+                {team.name}
+              </h1>
+              <div className="flex justify-center">
+                <span className={`px-6 py-2 rounded-full text-sm font-bold border ${team.badgeClass} bg-white/5`}>
+                  {team.icon} {team.nameEn} TEAM
+                </span>
+              </div>
             </>
           ) : (
             <>
-              <img src="/assets/saturn.png" alt="" className="w-24 h-24 mx-auto mb-6 animate-float-slow opacity-40" />
-              <h2 className="text-2xl font-bold mb-3 gold-text">⏳ รอประกาศทีม</h2>
-              <p className="text-on-surface/50 max-w-sm mx-auto mb-6">คุณลงทะเบียนเรียบร้อยแล้ว! ทีมงานจะจัดสรรทีมสีให้คุณเร็วๆ นี้</p>
+              <img src="/assets/saturn.png" alt="Pending" className="w-40 h-40 mx-auto animate-float-slow opacity-40 grayscale mb-8" />
+              <h2 className="text-4xl font-bold gold-text mb-4">⏳ รอประกาศทีม</h2>
+              <p className="text-on-surface/60 max-w-md mx-auto mb-6">คุณลงทะเบียนเรียบร้อยแล้ว! ทีมงานจะจัดสรรทีมสีให้คุณเร็วๆ นี้</p>
               <div className="flex items-center justify-center gap-3 text-on-surface/30">
                 {TEAMS.map(t => (
                   <div key={t.id} className="w-8 h-8 rounded-full flex items-center justify-center text-xs opacity-40" style={{ backgroundColor: t.color + '40' }}>
