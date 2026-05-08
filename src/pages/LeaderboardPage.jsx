@@ -64,8 +64,55 @@ export default function LeaderboardPage() {
             <div className="w-12 h-12 border-3 border-primary/30 border-t-primary rounded-full animate-spin" />
           </div>
         ) : (
-          <div className="space-y-6">
-            {scores.map((item, index) => (
+          <div className="space-y-12">
+            {/* Visual Bar Chart for Screen Sharing */}
+            <div className="glass-panel p-8 md:p-12 rounded-[2rem] border-primary/10 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+              
+              <div className="flex items-end justify-around h-64 md:h-80 gap-4 pt-10">
+                {scores.map((item) => {
+                  const maxScore = Math.max(...scores.map(s => s.score)) || 1
+                  const heightPercentage = Math.max((item.score / maxScore) * 100, 5)
+                  
+                  return (
+                    <div key={item.team_id} className="flex flex-col items-center flex-1 group">
+                      {/* Score Label */}
+                      <div className="mb-4 text-xl md:text-3xl font-mono font-bold gold-text animate-bounce-subtle">
+                        {item.score.toLocaleString()}
+                      </div>
+                      
+                      {/* Bar */}
+                      <div className="relative w-full max-w-[60px] md:max-w-[100px] flex flex-col justify-end">
+                        <div 
+                          className="w-full rounded-t-xl transition-all duration-1000 ease-out relative group-hover:brightness-125"
+                          style={{ 
+                            height: `${heightPercentage}%`, 
+                            backgroundColor: item.teamInfo?.color,
+                            boxShadow: `0 0 30px ${item.teamInfo?.color}44, inset 0 0 20px rgba(255,255,255,0.3)`
+                          }}
+                        >
+                          {/* Shimmer effect */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-t-xl" />
+                        </div>
+                      </div>
+                      
+                      {/* Team Icon & Name */}
+                      <div className="mt-6 text-center">
+                        <div className="text-3xl md:text-5xl mb-2">{item.teamInfo?.icon}</div>
+                        <div className="text-[10px] md:text-xs font-bold uppercase tracking-tighter opacity-60" style={{ color: item.teamInfo?.color }}>
+                          {item.teamInfo?.nameEn}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Existing List View */}
+            <div className="space-y-4">
+              <h2 className="text-sm font-bold text-on-surface/30 uppercase tracking-widest px-4">อันดับคะแนนรายทีม</h2>
+              {scores.map((item, index) => (
               <div 
                 key={item.team_id}
                 className="glass-panel p-6 rounded-2xl flex items-center justify-between border-primary/10 hover:border-primary/40 transition-all group"
