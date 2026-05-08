@@ -220,7 +220,54 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Time Schedule Section */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-h1 text-4xl md:text-5xl font-bold mb-4 gold-text italic tracking-wider">TIME SCHEDULE</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary to-transparent mx-auto rounded-full" />
+          </div>
+
+          <div className="space-y-4">
+            {[
+              { time: '09:00 - 09:30', activity: 'ลงทะเบียน', icon: '📝' },
+              { time: '09:30 - 10:20', activity: 'Ice breaking', icon: '🧊' },
+              { time: '10:20 - 11:35', activity: 'ดอร์จบอล', icon: '🏐' },
+              { time: '11:35 - 12:05', activity: 'วิ่งเปรี้ยว / เลี้ยงปิงปอง', icon: '🏃' },
+              { time: '12:10 - 13:00', activity: 'รับประทานอาหารกลางวัน', icon: '🍱' },
+              { time: '13:00 - 15:00', activity: 'กิจกรรมแก้ปริศนา', icon: '🧩' },
+              { time: '15:00 - 16:30', activity: 'กิจกรรมทำความสะอาด', icon: '🧹' },
+              { time: '16:30 - 17:00', activity: 'พิธีปิด', icon: '✨' },
+            ].map((item, i) => (
+              <div 
+                key={i} 
+                className="glass-panel p-4 md:p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between hover:bg-white/5 transition-all border-white/5 group"
+              >
+                <div className="flex items-center gap-6 w-full md:w-auto">
+                  <div className="font-mono text-primary font-bold bg-primary/10 px-4 py-1.5 rounded-full text-sm border border-primary/20">
+                    {item.time}
+                  </div>
+                  <div className="text-2xl hidden md:block group-hover:scale-125 transition-transform">{item.icon}</div>
+                  <div className="text-lg font-bold text-on-surface/80">{item.activity}</div>
+                </div>
+                <div className="w-full md:w-32 h-px bg-white/5 my-4 md:my-0 hidden md:block" />
+                <div className="text-[10px] uppercase tracking-widest text-on-surface/20 font-bold hidden md:block">MathCom Unity Game</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Schedule Footer Note */}
+          <div className="mt-12 text-center text-on-surface/40 text-sm">
+             * แจกอาหาร เครื่องดื่ม และขนมฟรี ตลอดทั้งงาน
+          </div>
+        </div>
+
+        {/* Decorative Assets */}
+        <img src="/assets/compass-rose.png" alt="" className="absolute top-40 -left-20 w-40 opacity-5 animate-spin-slow" />
+        <img src="/assets/star-8pt.png" alt="" className="absolute bottom-40 -right-10 w-20 opacity-10 animate-twinkle" />
+      </section>
+
+      {/* Footer เดิม */}
       <footer className="py-12 px-6 border-t border-primary/10 bg-background text-center">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-center gap-3 mb-6">
