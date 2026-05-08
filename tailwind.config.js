@@ -7,51 +7,74 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Starry Theme - Sports Competition Colors
-        primary: '#FF6B9D',      // Vibrant pink/magenta
-        secondary: '#4ECDC4',    // Teal/turquoise
-        tertiary: '#FFE66D',     // Golden yellow
-        accent: '#A29BFE',       // Purple
+        // MathCom Sports Day — Cosmic Mystical Palette
+        primary: '#C8A43E',        // Celestial Gold
+        'primary-light': '#E8C85A',
+        secondary: '#7B6ED6',      // Mystic Purple
+        tertiary: '#E85D75',       // Cosmic Rose
+        accent: '#3DCFCF',         // Nebula Cyan
 
-        background: '#0A0E27',   // Deep space blue
-        surface: '#1A1F3A',      // Darker blue for cards
-        'surface-light': '#252D48',
+        background: '#0B0D1F',     // Deep Cosmic Navy
+        surface: '#131636',        // Dark Nebula
+        'surface-light': '#1E2252',
+        'surface-lighter': '#2A2F6E',
 
-        'on-surface': '#F0F0FF', // Off-white text
-        'on-background': '#F0F0FF',
-        'on-primary': '#ffffff',
-        'on-secondary': '#0A0E27',
+        'on-surface': '#F0EDEF',
+        'on-background': '#F0EDEF',
+        'on-primary': '#0B0D1F',
+        'on-secondary': '#FFFFFF',
+
+        outline: '#2A2F6E',
+        'outline-variant': '#3D4399',
 
         // Team Colors
-        'team-dragon': '#FF6B9D',    // Thunder Dragons (pink)
-        'team-phoenix': '#FF9F43',   // Phoenix Strikers (orange)
-        'team-titan': '#A29BFE',     // Titan Guardians (purple)
-        'team-shadow': '#2C3E50',    // Shadow Wolves (dark)
-
-        outline: '#00D4FF',          // Cyan accents
-        'outline-variant': '#00D4FF',
-        'primary-container': '#FF1493',
-        'on-primary-container': '#ffffff',
+        'team-red': '#E85D75',
+        'team-blue': '#4A90D9',
+        'team-yellow': '#E8C85A',
+        'team-green': '#4ADE80',
       },
       fontFamily: {
-        h1: ["Playfair Display", "Georgia", "serif"],
-        h2: ["Playfair Display", "Georgia", "serif"],
-        h3: ["Playfair Display", "Georgia", "serif"],
-        'body-md': ["Sarabun", "Lexend", "sans-serif"],
-        'body-lg': ["Sarabun", "Lexend", "sans-serif"],
-        'mono': ["Space Mono", "monospace"],
+        h1: ["Outfit", "Space Grotesk", "sans-serif"],
+        h2: ["Outfit", "Space Grotesk", "sans-serif"],
+        h3: ["Space Grotesk", "sans-serif"],
+        'body-md': ["Inter", "sans-serif"],
+        'body-lg': ["Inter", "sans-serif"],
+        'mono': ["JetBrains Mono", "monospace"],
       },
       backdropBlur: {
-        md: '12px',
+        md: '16px',
+        lg: '24px',
       },
       boxShadow: {
-        'glow-pink': '0 0 20px rgba(255, 107, 157, 0.5), 0 0 40px rgba(255, 107, 157, 0.25)',
-        'glow-cyan': '0 0 20px rgba(78, 205, 196, 0.5), 0 0 40px rgba(78, 205, 196, 0.25)',
-        'glow-lg': '0 0 30px rgba(255, 107, 157, 0.8), 0 0 60px rgba(78, 205, 196, 0.4)',
-        'neon': '0 0 10px rgba(255, 107, 157, 0.8), 0 0 20px rgba(255, 107, 157, 0.4), inset 0 0 20px rgba(255, 107, 157, 0.1)',
+        'glow-primary': '0 0 20px rgba(200, 164, 62, 0.4), 0 0 40px rgba(200, 164, 62, 0.2)',
+        'glow-secondary': '0 0 20px rgba(123, 110, 214, 0.3), 0 0 40px rgba(123, 110, 214, 0.15)',
+        'glow-gold': '0 0 30px rgba(200, 164, 62, 0.5), 0 0 60px rgba(200, 164, 62, 0.2)',
+        'neon-border': 'inset 0 0 10px rgba(200, 164, 62, 0.2), 0 0 10px rgba(200, 164, 62, 0.2)',
       },
-      backgroundImage: {
-        'starry': 'radial-gradient(2px 2px at 20% 30%, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 60% 70%, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 50% 50%, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 80% 10%, #fff, rgba(0,0,0,0))',
+      animation: {
+        'float-slow': 'floatSlow 20s ease-in-out infinite',
+        'float-medium': 'floatMedium 15s ease-in-out infinite',
+        'float-fast': 'floatFast 10s ease-in-out infinite',
+        'twinkle': 'twinkle 3s ease-in-out infinite',
+        'spin-slow': 'spin 30s linear infinite',
+      },
+      keyframes: {
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+          '50%': { transform: 'translateY(-30px) rotate(5deg)' },
+        },
+        floatMedium: {
+          '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+          '50%': { transform: 'translateY(-20px) rotate(-3deg)' },
+        },
+        floatFast: {
+          '0%, 100%': { transform: 'translateY(0) scale(1)' },
+          '50%': { transform: 'translateY(-15px) scale(1.05)' },
+        },
+        twinkle: {
+          '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
+          '50%': { opacity: '1', transform: 'scale(1.1)' },
+        },
       },
     },
   },

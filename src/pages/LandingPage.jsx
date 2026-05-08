@@ -1,256 +1,236 @@
 import { useNavigate } from 'react-router-dom'
-import Starfield from '../components/Starfield'
+import CosmicBackground from '../components/GeometricBackground'
 
-const TEAMS = [
+const FEATURES = [
   {
-    id: 1,
-    name: 'Thunder Dragons',
-    icon: '⚡',
-    color: '#FF6B9D',
-    description: 'Fast, powerful, unstoppable',
+    title: 'ลงทะเบียน',
+    description: 'สมัครเข้าร่วมกีฬาสีประจำภาค ง่ายๆ แค่กรอกข้อมูล',
+    icon: '/assets/compass-rose.png',
+    step: '01'
   },
   {
-    id: 2,
-    name: 'Phoenix Strikers',
-    icon: '🔥',
-    color: '#FF9F43',
-    description: 'Rising from the flames of victory',
+    title: 'รอจัดทีม',
+    description: 'ทีมงานจะจัดสรรทีมสีให้คุณอย่างยุติธรรม',
+    icon: '/assets/mystic-eye.png',
+    step: '02'
   },
   {
-    id: 3,
-    name: 'Titan Guardians',
-    icon: '💪',
-    color: '#A29BFE',
-    description: 'Strength meets strategy',
-  },
-  {
-    id: 4,
-    name: 'Shadow Wolves',
-    icon: '🌙',
-    color: '#2C3E50',
-    description: 'Silent, swift, supreme',
-  },
+    title: 'แข่งขัน!',
+    description: 'ร่วมแข่งขันกีฬาสุดมันส์กับเพื่อนๆ ในภาค',
+    icon: '/assets/all-seeing-eye.png',
+    step: '03'
+  }
 ]
 
 export default function LandingPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-background text-on-background overflow-hidden relative">
-      {/* Cosmic Background */}
-      <Starfield />
-      <div className="nebula" />
+    <div className="min-h-screen bg-background text-on-background">
+      <CosmicBackground />
 
       {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-surface/10 border-b border-outline/10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="font-h1 text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent neon-text">
-            ✦ CU Sport Unity ✦
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-primary/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <img src="/assets/all-seeing-eye.png" alt="" className="w-9 h-9 drop-shadow-lg" />
+            <span className="font-h1 text-xl font-bold tracking-tight gold-text">MATHCOM</span>
           </div>
           <div className="flex gap-4">
             <button
-              onClick={() => navigate('/login')}
-              className="px-6 py-2 text-on-surface hover:text-primary transition-colors"
+              onClick={() => navigate('/check')}
+              className="px-6 py-2 text-on-surface/70 hover:text-primary transition-colors font-medium"
             >
-              Sign In
+              เช็คสถานะ
             </button>
             <button
               onClick={() => navigate('/register')}
-              className="px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all active:scale-95 font-bold"
+              className="btn-primary py-2 px-6"
             >
-              Register
+              ลงทะเบียน
             </button>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-32 px-4 text-center min-h-screen flex items-center justify-center">
-        <div className="max-w-4xl mx-auto">
-          {/* Cosmic Glow Background */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-20 animate-pulse" />
-            <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay: '1s'}} />
+      <section className="relative pt-20 pb-24 px-6 overflow-hidden">
+        {/* Floating Planets */}
+        <img 
+          src="/assets/saturn.png" 
+          alt="" 
+          className="absolute top-10 right-[5%] w-44 md:w-64 opacity-20 animate-float-slow pointer-events-none"
+        />
+        <img 
+          src="/assets/planet-venus.png" 
+          alt="" 
+          className="absolute bottom-10 left-[3%] w-28 md:w-40 opacity-15 animate-float-medium pointer-events-none"
+        />
+        <img 
+          src="/assets/moon-soft.png" 
+          alt="" 
+          className="absolute top-[40%] right-[15%] w-16 md:w-24 opacity-10 animate-float-fast pointer-events-none"
+        />
+
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-8">
+            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            เปิดลงทะเบียนแล้ว!
           </div>
 
-          <div className="relative z-10">
-            <div className="mb-6 text-6xl animate-bounce">✦</div>
-
-            <h1 className="font-h1 text-6xl md:text-8xl font-bold mb-6 leading-tight">
-              <span className="neon-primary">Battle</span>
-              <br />
-              <span className="neon-secondary">for Glory</span>
-            </h1>
-
-            <p className="text-xl text-on-surface-variant mb-12 max-w-2xl mx-auto leading-relaxed">
-              Witness the greatest inter-faculty sports competition in the cosmos.
-              Where champions rise, legends are born, and teams clash for eternal glory.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => navigate('/login')}
-                className="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-lg shadow-glow-lg hover:shadow-neon transition-all active:scale-95 text-lg neon-text"
-                style={{
-                  boxShadow: '0 0 20px rgba(255, 107, 157, 0.6), 0 0 40px rgba(78, 205, 196, 0.3)',
-                }}
-              >
-                🚀 Join the Battle
-              </button>
-              <button
-                onClick={() => window.scrollTo(0, window.innerHeight)}
-                className="px-8 py-4 border-2 border-outline text-on-surface font-bold rounded-lg hover:bg-outline/10 hover:shadow-glow-cyan transition-all active:scale-95 text-lg"
-              >
-                ✧ Explore Teams
-              </button>
-            </div>
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src="/assets/all-seeing-eye.png" 
+              alt="MathCom Sports Day" 
+              className="w-28 h-28 md:w-36 md:h-36 drop-shadow-2xl animate-float-slow"
+            />
           </div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 bg-surface/10 backdrop-blur-sm border-y border-outline/10">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="text-center glow-card p-6 rounded-lg">
-            <div className="text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">4</div>
-            <div className="text-on-surface-variant text-sm">COSMIC TEAMS</div>
-          </div>
-          <div className="text-center glow-card p-6 rounded-lg">
-            <div className="text-5xl font-bold bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent mb-2">120+</div>
-            <div className="text-on-surface-variant text-sm">STAR ATHLETES</div>
-          </div>
-          <div className="text-center glow-card p-6 rounded-lg">
-            <div className="text-5xl font-bold bg-gradient-to-r from-tertiary to-accent bg-clip-text text-transparent mb-2">50+</div>
-            <div className="text-on-surface-variant text-sm">EPIC MATCHES</div>
-          </div>
-          <div className="text-center glow-card p-6 rounded-lg">
-            <div className="text-5xl font-bold text-primary mb-2">∞</div>
-            <div className="text-on-surface-variant text-sm">ETERNAL GLORY</div>
-          </div>
-        </div>
-      </section>
+          <h1 className="font-h1 text-5xl md:text-7xl lg:text-8xl font-extrabold mb-6 leading-[1.1] tracking-tight">
+            <span className="gold-text">กีฬาสี</span>
+            <br />
+            <span className="text-on-surface">ภาคคณิตศาสตร์</span>
+          </h1>
 
-      {/* Teams Showcase */}
-      <section className="py-20 px-4 relative">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-h1 text-5xl font-bold text-center mb-4 neon-primary">
-            ✦ CHOOSE YOUR DESTINY ✦
-          </h2>
-          <p className="text-center text-on-surface-variant mb-12 max-w-2xl mx-auto">
-            Four legendary teams emerge from the cosmic void, each wielding unique power.
+          <p className="text-lg md:text-xl text-on-surface/60 mb-6 max-w-2xl mx-auto leading-relaxed">
+            MathCom Sports Day 2026
+          </p>
+          <p className="text-base text-on-surface/40 mb-12 max-w-lg mx-auto">
+            มาร่วมสร้างความสามัคคี แข่งกีฬา สนุกสนาน กับเพื่อนๆ ในภาค
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {TEAMS.map((team, idx) => (
-              <div
-                key={team.id}
-                className="glow-card backdrop-blur-xl bg-surface/40 rounded-2xl p-8 hover:scale-105 transition-all duration-300 relative overflow-hidden group"
-                style={{
-                  borderColor: `${team.color}60`,
-                  background: `linear-gradient(135deg, ${team.color}08 0%, transparent 100%), rgba(26, 31, 58, 0.4)`,
-                }}
-              >
-                {/* Animated background glow */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at center, ${team.color}20 0%, transparent 70%)`,
-                  }}
-                />
+          {/* Hands + CTA */}
+          <div className="flex items-center justify-center gap-2 md:gap-6 mb-8">
+            <img 
+              src="/assets/hand-left.png" 
+              alt="" 
+              className="w-16 md:w-24 opacity-60 animate-float-medium hidden sm:block"
+            />
+            <button
+              onClick={() => navigate('/register')}
+              className="btn-primary text-lg px-12 py-4 shadow-glow-gold"
+            >
+              ✦ ลงทะเบียนเข้าร่วม
+            </button>
+            <img 
+              src="/assets/hand-right.png" 
+              alt="" 
+              className="w-16 md:w-24 opacity-60 animate-float-medium hidden sm:block"
+            />
+          </div>
 
-                <div className="relative z-10">
-                  <div className="text-7xl mb-4 text-center filter drop-shadow-lg">{team.icon}</div>
-                  <h3 className="text-2xl font-bold text-on-surface mb-2 text-center" style={{ color: team.color }}>
-                    {team.name}
-                  </h3>
-                  <p className="text-sm text-on-surface-variant text-center mb-6">
-                    {team.description}
-                  </p>
-                  <button
-                    onClick={() => navigate('/login')}
-                    className="w-full py-3 border-2 rounded-lg font-semibold transition-all hover:bg-current/10"
-                    style={{
-                      color: team.color,
-                      borderColor: `${team.color}60`,
-                    }}
-                  >
-                    ✦ Join {team.name.split(' ')[0]}
-                  </button>
+          <button
+            onClick={() => navigate('/check')}
+            className="text-on-surface/40 hover:text-primary transition-colors text-sm font-medium underline underline-offset-4"
+          >
+            เช็คสถานะการลงทะเบียน →
+          </button>
+        </div>
+      </section>
+
+      {/* Steps Section */}
+      <section className="py-24 px-6 relative">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-h1 text-3xl md:text-4xl font-bold mb-4">ขั้นตอนการเข้าร่วม</h2>
+            <div className="w-20 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {FEATURES.map((feature, i) => (
+              <div
+                key={i}
+                className="glass-panel p-8 rounded-2xl group hover:border-primary/50 transition-all duration-500 text-center"
+              >
+                <div className="text-xs font-mono text-primary/60 mb-4">{feature.step}</div>
+                <div className="flex justify-center mb-6">
+                  <img 
+                    src={feature.icon} 
+                    alt="" 
+                    className="w-16 h-16 group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
+                <h3 className="text-xl font-bold mb-3 gold-text">
+                  {feature.title}
+                </h3>
+                <p className="text-on-surface/50 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 bg-surface/10 backdrop-blur-sm border-y border-outline/10">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-h1 text-5xl font-bold text-center mb-12 neon-secondary">
-            ✦ WHY COMPETE WITH US ✦
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="glow-card backdrop-blur-lg bg-surface/30 rounded-2xl p-8">
-              <div className="text-5xl mb-4">🏆</div>
-              <h3 className="text-2xl font-bold text-primary mb-3">COMPETE & CONQUER</h3>
-              <p className="text-on-surface-variant">
-                Engage in thrilling inter-faculty battles where only the strongest emerge victorious.
-              </p>
+      {/* Event Info */}
+      <section className="py-24 px-6 bg-surface/30 backdrop-blur-sm border-y border-primary/10">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
+          <div className="flex-1">
+            <h2 className="font-h1 text-4xl md:text-5xl font-bold mb-8">
+              <span className="gold-text">รายละเอียด</span>
+              <br />
+              งานกีฬาสี
+            </h2>
+            <div className="space-y-5">
+              {[
+                { icon: '📅', label: 'วันที่', value: '9 พฤษภาคม 2026' },
+                { icon: '📍', label: 'สถานที่', value: 'อาคารมหาวชิรุณหิศ' },
+                { icon: '🏃', label: 'กิจกรรม', value: 'กีฬาแข่งขัน, เชียร์, กองเชียร์' },
+                { icon: '👥', label: 'ทีม', value: '4 สี — แดง, น้ำเงิน, เหลือง, เขียว' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 text-lg">
+                  <span className="text-2xl">{item.icon}</span>
+                  <div>
+                    <div className="text-xs text-on-surface/40 font-bold uppercase tracking-wider mb-1">{item.label}</div>
+                    <div className="text-on-surface/80">{item.value}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-
-            <div className="glow-card backdrop-blur-lg bg-surface/30 rounded-2xl p-8">
-              <div className="text-5xl mb-4">🌟</div>
-              <h3 className="text-2xl font-bold text-secondary mb-3">TEAM UNITY</h3>
-              <p className="text-on-surface-variant">
-                Build bonds with teammates and experience the power of collective greatness.
-              </p>
-            </div>
-
-            <div className="glow-card backdrop-blur-lg bg-surface/30 rounded-2xl p-8">
-              <div className="text-5xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-tertiary mb-3">TRACK ASCENDANCE</h3>
-              <p className="text-on-surface-variant">
-                Monitor your team's rise through real-time standings and legendary leaderboards.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-20 px-4 text-center relative">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-h1 text-5xl font-bold mb-6">
-            <span className="neon-primary">READY</span> TO <span className="neon-secondary">SOAR?</span>
-          </h2>
-          <p className="text-lg text-on-surface-variant mb-8">
-            The cosmos awaits. Your legend begins now.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/register')}
-              className="px-8 py-4 bg-gradient-to-r from-primary to-secondary text-white font-bold rounded-lg hover:shadow-2xl transition-all active:scale-95 text-lg"
+              className="mt-10 btn-primary"
             >
-              LAUNCH NOW 🚀
+              ลงทะเบียนเลย
             </button>
-            <button
-              onClick={() => navigate('/login')}
-              className="px-8 py-4 border-2 border-outline text-on-surface font-bold rounded-lg hover:bg-outline/10 transition-all active:scale-95 text-lg"
-            >
-              SIGN IN ✦
-            </button>
+          </div>
+          <div className="flex-1 relative flex justify-center">
+            <div className="relative">
+              <img 
+                src="/assets/jupiter.png" 
+                alt="" 
+                className="w-64 h-64 md:w-80 md:h-80 animate-float-slow drop-shadow-2xl"
+              />
+              <img 
+                src="/assets/star-8pt.png" 
+                alt="" 
+                className="absolute -top-4 -right-4 w-10 h-10 animate-twinkle"
+              />
+              <img 
+                src="/assets/star-8pt.png" 
+                alt="" 
+                className="absolute -bottom-2 -left-6 w-8 h-8 animate-twinkle"
+                style={{ animationDelay: '1s' }}
+              />
+            </div>
+            <div className="absolute -top-8 -right-8 w-32 h-32 bg-primary/20 blur-3xl animate-pulse" />
+            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-secondary/20 blur-3xl animate-pulse" />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-outline/10 py-8 px-4 bg-surface/20 text-center">
-        <p className="text-on-surface-variant text-sm">
-          ✦ CU Sport Unity - Where Champions Rise ✦
-          <br />
-          © 2026 Department of Mathematics and Computer Science
-        </p>
+      <footer className="py-12 px-6 border-t border-primary/10 bg-background text-center">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <img src="/assets/all-seeing-eye.png" alt="" className="w-8 h-8 opacity-50" />
+            <span className="font-h1 text-lg font-bold tracking-tight text-on-surface/50">MATHCOM SPORTS DAY</span>
+          </div>
+          <p className="text-on-surface/30 text-sm max-w-md mx-auto">
+            © 2026 ภาควิชาคณิตศาสตร์และวิทยาการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย
+          </p>
+        </div>
       </footer>
     </div>
   )

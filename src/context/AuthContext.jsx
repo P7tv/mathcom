@@ -3,247 +3,281 @@ import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext()
 
-// Available team icons and colors for the create-team picker
-export const TEAM_ICONS = ['⚡', '🔥', '💪', '🌙', '🐍', '🦅', '🐻', '🦊', '🐺', '🦁', '🐉', '🌟', '💎', '🎯', '🏆', '⚔️']
-export const TEAM_COLORS = [
-  '#FF6B9D', '#FF9F43', '#A29BFE', '#6C7A89',
-  '#00D4FF', '#E74C3C', '#1ABC9C', '#F39C12',
-  '#9B59B6', '#2ECC71', '#E91E63', '#00BCD4',
+// Team definitions for Sports Day
+export const TEAMS = [
+  { id: 'red', name: 'ทีมแดง', nameEn: 'Red', color: '#E85D75', icon: '🔴', bgClass: 'bg-team-red', badgeClass: 'team-badge-red' },
+  { id: 'blue', name: 'ทีมน้ำเงิน', nameEn: 'Blue', color: '#4A90D9', icon: '🔵', bgClass: 'bg-team-blue', badgeClass: 'team-badge-blue' },
+  { id: 'yellow', name: 'ทีมเหลือง', nameEn: 'Yellow', color: '#E8C85A', icon: '🟡', bgClass: 'bg-team-yellow', badgeClass: 'team-badge-yellow' },
+  { id: 'green', name: 'ทีมเขียว', nameEn: 'Green', color: '#4ADE80', icon: '🟢', bgClass: 'bg-team-green', badgeClass: 'team-badge-green' },
 ]
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [allRegistrations, setAllRegistrations] = useState([])
 
   // Initialize from localStorage
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser')
+    const savedUser = localStorage.getItem('sportsDayUser')
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser))
       } catch (e) {
-        localStorage.removeItem('currentUser')
+        localStorage.removeItem('sportsDayUser')
       }
+    }
+    const savedAdmin = localStorage.getItem('sportsDayAdmin')
+    if (savedAdmin === 'true') {
+      setIsAdmin(true)
     }
     setIsLoading(false)
   }, [])
 
   const saveUser = (userData) => {
     setUser(userData)
-    localStorage.setItem('currentUser', JSON.stringify(userData))
+    localStorage.setItem('sportsDayUser', JSON.stringify(userData))
   }
 
-  const login = async (studentId, password) => {
-    if (!studentId || !password) return false
-
-    // Look up existing registration in Supabase
-    const { data, error } = await supabase
+  // Register a new participant
+  const register = async (data) => {
+    // Check if already registered
+    const { data: existing } = await supabase
       .from('registrations')
       .select('*')
-      .eq('student_id', studentId)
-      .single()
+      .eq('student_id', data.studentId)
+      .maybeSingle()
 
-    if (error || !data) {
-      // Fallback: mock login for dev
-      saveUser({
-        studentId,
-        name: `Student ${studentId.slice(-4)}`,
-        team: null,
-        teamId: null,
-        teamIcon: null,
-        teamColor: null,
-      })
-      return true
+    if (existing) {
+      return { success: false, error: 'รหัสนักศึกษานี้ลงทะเบียนแล้ว' }
     }
 
-    // If user has a team, fetch team details
-    let teamData = null
-    if (data.team_id) {
-      const { data: td } = await supabase
-        .from('teams')
-        .select('*')
-        .eq('id', data.team_id)
-        .single()
-      teamData = td
-    }
-
-    saveUser({
-      studentId: data.student_id,
-      name: `${data.first_name} ${data.last_name}`,
-      team: teamData?.name || null,
-      teamId: data.team_id || null,
-      teamIcon: teamData?.icon || null,
-      teamColor: teamData?.color || null,
-      major: data.major,
-    })
-    return true
-  }
-
-  const register = async (data) => {
     const { error } = await supabase.from('registrations').insert({
       student_id: data.studentId,
       first_name: data.firstName,
       last_name: data.lastName,
+      nickname: data.nickname || '',
       major: data.major,
+      year: data.year || '1',
       food_allergies: data.foodAllergies || '',
       medical_info: data.medicalInfo || '',
       team_id: null,
-      team_name: '',
     })
 
     if (error) {
-      console.error('Supabase registration error:', error)
-      if (error.code === '23505') {
-        return { success: false, error: 'รหัสนักศึกษานี้ลงทะเบียนไปแล้ว' }
-      }
+      console.error('Supabase error:', error)
       return { success: false, error: error.message }
     }
 
-    saveUser({
+    const userData = {
       studentId: data.studentId,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      nickname: data.nickname || '',
       name: `${data.firstName} ${data.lastName}`,
-      team: null,
-      teamId: null,
-      teamIcon: null,
-      teamColor: null,
       major: data.major,
-    })
-
-    return { success: true }
-  }
-
-  const createTeam = async ({ name, icon, color, slogan }) => {
-    if (!user) return { success: false, error: 'Not logged in' }
-
-    // Insert team
-    const { data: teamData, error: teamError } = await supabase
-      .from('teams')
-      .insert({
-        name,
-        icon,
-        color,
-        slogan: slogan || '',
-        created_by: user.studentId,
-        max_members: 10,
-      })
-      .select()
-      .single()
-
-    if (teamError) {
-      console.error('Create team error:', teamError)
-      if (teamError.code === '23505') {
-        return { success: false, error: 'ชื่อทีมนี้มีคนใช้แล้ว' }
-      }
-      return { success: false, error: teamError.message }
-    }
-
-    // Auto-join: update registration
-    const { error: joinError } = await supabase
-      .from('registrations')
-      .update({ team_id: teamData.id, team_name: name })
-      .eq('student_id', user.studentId)
-
-    if (joinError) {
-      console.error('Auto-join error:', joinError)
-      return { success: false, error: joinError.message }
-    }
-
-    saveUser({
-      ...user,
-      team: name,
-      teamId: teamData.id,
-      teamIcon: icon,
-      teamColor: color,
-    })
-
-    return { success: true, team: teamData }
-  }
-
-  const joinTeam = async (teamId) => {
-    if (!user) return { success: false, error: 'Not logged in' }
-
-    // Fetch team to check capacity
-    const { data: teamData, error: fetchError } = await supabase
-      .from('teams')
-      .select('*')
-      .eq('id', teamId)
-      .single()
-
-    if (fetchError || !teamData) {
-      return { success: false, error: 'ไม่พบทีมนี้' }
-    }
-
-    // Count current members
-    const { count } = await supabase
-      .from('registrations')
-      .select('*', { count: 'exact', head: true })
-      .eq('team_id', teamId)
-
-    if (count >= teamData.max_members) {
-      return { success: false, error: 'ทีมนี้เต็มแล้ว' }
-    }
-
-    // Join
-    const { error: joinError } = await supabase
-      .from('registrations')
-      .update({ team_id: teamId, team_name: teamData.name })
-      .eq('student_id', user.studentId)
-
-    if (joinError) {
-      console.error('Join team error:', joinError)
-      return { success: false, error: joinError.message }
-    }
-
-    saveUser({
-      ...user,
-      team: teamData.name,
-      teamId: teamData.id,
-      teamIcon: teamData.icon,
-      teamColor: teamData.color,
-    })
-
-    return { success: true }
-  }
-
-  const leaveTeam = async () => {
-    if (!user || !user.teamId) return { success: false, error: 'ไม่ได้อยู่ทีมไหน' }
-
-    const { error } = await supabase
-      .from('registrations')
-      .update({ team_id: null, team_name: '' })
-      .eq('student_id', user.studentId)
-
-    if (error) {
-      console.error('Leave team error:', error)
-      return { success: false, error: error.message }
-    }
-
-    saveUser({
-      ...user,
+      year: data.year || '',
       team: null,
       teamId: null,
-      teamIcon: null,
-      teamColor: null,
-    })
+      registeredAt: new Date().toISOString(),
+    }
 
+    saveUser(userData)
     return { success: true }
+  }
+
+  // Check registration status (login by student ID)
+  const checkStatus = async (studentId) => {
+    const { data, error } = await supabase
+      .from('registrations')
+      .select('*')
+      .eq('student_id', studentId)
+      .maybeSingle()
+
+    if (error || !data) {
+      // Mock mode: check localStorage for all registrations
+      const allRegs = JSON.parse(localStorage.getItem('sportsDayAllRegistrations') || '[]')
+      const found = allRegs.find(r => r.studentId === studentId)
+      if (found) {
+        saveUser(found)
+        return { success: true, user: found }
+      }
+      return { success: false, error: 'ไม่พบข้อมูลการลงทะเบียน กรุณาลงทะเบียนก่อน' }
+    }
+
+    const team = data.team_id ? TEAMS.find(t => t.id === data.team_id) : null
+    const userData = {
+      studentId: data.student_id,
+      firstName: data.first_name,
+      lastName: data.last_name,
+      nickname: data.nickname || '',
+      name: `${data.first_name} ${data.last_name}`,
+      major: data.major,
+      year: data.year || '',
+      team: team?.name || null,
+      teamId: data.team_id || null,
+      isAdmin: data.is_admin || false,
+      registeredAt: data.created_at,
+    }
+
+    if (data.is_admin) {
+      setIsAdmin(true)
+      localStorage.setItem('sportsDayAdmin', 'true')
+    }
+
+    saveUser(userData)
+    return { success: true, user: userData }
+  }
+
+  // Admin login
+  const adminLogin = (password) => {
+    // Simple hardcoded admin password
+    if (password === 'mathcom2026') {
+      setIsAdmin(true)
+      localStorage.setItem('sportsDayAdmin', 'true')
+      return true
+    }
+    return false
+  }
+
+  const adminLogout = () => {
+    setIsAdmin(false)
+    localStorage.removeItem('sportsDayAdmin')
+  }
+
+  // Fetch all registrations (admin only)
+  const fetchAllRegistrations = async () => {
+    const { data, error } = await supabase
+      .from('registrations')
+      .select('*')
+      .order('created_at', { ascending: true })
+
+    if (error || !data || data.length === 0) {
+      // Mock mode: use localStorage
+      const allRegs = JSON.parse(localStorage.getItem('sportsDayAllRegistrations') || '[]')
+      setAllRegistrations(allRegs)
+      return allRegs
+    }
+
+    const mapped = data.map(d => ({
+      studentId: d.student_id,
+      firstName: d.first_name,
+      lastName: d.last_name,
+      nickname: d.nickname || '',
+      name: `${d.first_name} ${d.last_name}`,
+      major: d.major,
+      year: d.year || '',
+      team: d.team_id ? TEAMS.find(t => t.id === d.team_id)?.name : null,
+      teamId: d.team_id || null,
+      isAdmin: d.is_admin || false,
+      foodAllergies: d.food_allergies || '',
+      medicalInfo: d.medical_info || '',
+      registeredAt: d.created_at,
+    }))
+
+    setAllRegistrations(mapped)
+    return mapped
+  }
+
+  // Toggle Admin status
+  const toggleAdmin = async (studentId, status) => {
+    await supabase
+      .from('registrations')
+      .update({ is_admin: status })
+      .eq('student_id', studentId)
+    
+    await fetchAllRegistrations()
+  }
+
+  // Assign team to a student (admin only)
+  const assignTeam = async (studentId, teamId) => {
+    await supabase
+      .from('registrations')
+      .update({ team_id: teamId })
+      .eq('student_id', studentId)
+
+    // Update local mock storage too
+    const allRegs = JSON.parse(localStorage.getItem('sportsDayAllRegistrations') || '[]')
+    const updated = allRegs.map(r => {
+      if (r.studentId === studentId) {
+        const team = TEAMS.find(t => t.id === teamId)
+        return { ...r, teamId, team: team?.name || null }
+      }
+      return r
+    })
+    localStorage.setItem('sportsDayAllRegistrations', JSON.stringify(updated))
+
+    // If current user matches, update their state too
+    if (user?.studentId === studentId) {
+      const team = TEAMS.find(t => t.id === teamId)
+      const updatedUser = { 
+        ...user, 
+        teamId: teamId || null, 
+        team: team?.name || null 
+      }
+      saveUser(updatedUser)
+    }
+
+    await fetchAllRegistrations()
+  }
+
+  // Random assign all unassigned students
+  const randomAssignTeams = async () => {
+    const unassigned = allRegistrations.filter(r => !r.teamId)
+    const shuffled = [...unassigned].sort(() => Math.random() - 0.5)
+
+    for (let i = 0; i < shuffled.length; i++) {
+      const teamIdx = i % TEAMS.length
+      await assignTeam(shuffled[i].studentId, TEAMS[teamIdx].id)
+    }
+  }
+
+  // Save registration to mock local storage (when Supabase is unavailable)
+  const saveToLocalMock = (userData) => {
+    const allRegs = JSON.parse(localStorage.getItem('sportsDayAllRegistrations') || '[]')
+    const exists = allRegs.find(r => r.studentId === userData.studentId)
+    if (!exists) {
+      allRegs.push(userData)
+      localStorage.setItem('sportsDayAllRegistrations', JSON.stringify(allRegs))
+    }
+  }
+
+  // Enhanced register that also saves to local mock
+  const registerWithMock = async (data) => {
+    const result = await register(data)
+    if (result.success) {
+      saveToLocalMock({
+        studentId: data.studentId,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        nickname: data.nickname || '',
+        name: `${data.firstName} ${data.lastName}`,
+        major: data.major,
+        year: data.year || '',
+        team: null,
+        teamId: null,
+        foodAllergies: data.foodAllergies || '',
+        medicalInfo: data.medicalInfo || '',
+        registeredAt: new Date().toISOString(),
+      })
+    }
+    return result
   }
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem('currentUser')
-  }
-
-  const updateUser = (updatedData) => {
-    const updated = { ...user, ...updatedData }
-    saveUser(updated)
+    localStorage.removeItem('sportsDayUser')
   }
 
   return (
     <AuthContext.Provider value={{
-      user, isLoading,
-      login, register, logout, updateUser,
-      createTeam, joinTeam, leaveTeam,
+      user, isLoading, isAdmin,
+      register: registerWithMock, checkStatus, logout,
+      adminLogin, adminLogout,
+      allRegistrations, fetchAllRegistrations,
+      assignTeam, randomAssignTeams,
+      toggleAdmin,
+      TEAMS,
     }}>
       {children}
     </AuthContext.Provider>

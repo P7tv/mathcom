@@ -1,16 +1,20 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
-import ProtectedRoute from './components/ProtectedRoute'
-import Layout from './components/Layout'
 
 // Pages
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import HomePage from './pages/HomePage'
-import TeamsPage from './pages/TeamsPage'
-import GamesPage from './pages/GamesPage'
+import AdminPage from './pages/AdminPage'
 import LeaderboardPage from './pages/LeaderboardPage'
+
+function ProtectedRoute({ children }) {
+  const { user, isLoading } = useAuth()
+  if (isLoading) return <div className="min-h-screen bg-background flex items-center justify-center"><div className="w-10 h-10 border-3 border-primary/30 border-t-primary rounded-full animate-spin" /></div>
+  if (!user) return <Navigate to="/check" replace />
+  return children
+}
 
 function AppRoutes() {
   const { user } = useAuth()
@@ -19,57 +23,15 @@ function AppRoutes() {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={user ? <Navigate to={user.teamId ? '/dashboard' : '/teams'} /> : <LoginPage />} />
-      <Route path="/register" element={user ? <Navigate to={user.teamId ? '/dashboard' : '/teams'} /> : <RegisterPage />} />
+      <Route path="/check" element={user ? <Navigate to="/dashboard" /> : <LoginPage />} />
+      <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage />} />
 
-      {/* Protected Routes - Dashboard & Competition */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <HomePage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/teams"
-        element={
-          <ProtectedRoute>
-            {user?.teamId ? (
-              <Layout>
-                <TeamsPage />
-              </Layout>
-            ) : (
-              <TeamsPage />
-            )}
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/games"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <GamesPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/leaderboard"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <LeaderboardPage />
-            </Layout>
-          </ProtectedRoute>
-        }
-      />
+      {/* Protected Dashboard */}
+      <Route path="/dashboard" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+      <Route path="/leaderboard" element={<LeaderboardPage />} />
+      <Route path="/admin" element={<AdminPage />} />
 
-
-      {/* Catch all - redirect to home */}
+      {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
